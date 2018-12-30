@@ -5,11 +5,11 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "build": "wasm-pack build lib/crate --release",
+    "build": "node build.js",
     "clean": "rm -rf dist",
-    "dev": "parcel demo/index.html",
-    "lint": "eslint . --ignore-path .gitignore --ignore-pattern dist/",
-    "lint:fix": "eslint . --ignore-path .gitignore --ignore-pattern dist/ --fix"
+    "dev": "parcel demo/index.html -d dev",
+    "lint": "eslint . --ignore-path .gitignore --ignore-pattern dist/ --ignore-pattern lib/crate/",
+    "lint:fix": "eslint . --ignore-path .gitignore --ignore-pattern dist/ --ignore-pattern lib/crate/ --fix"
   },
   "keywords": [
     "javascript",
