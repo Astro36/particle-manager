@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "wasm-pack build",
-    "clean": "rm -rf dist"
+    "docs:demo": "webpack --config webpack.docs.js",
+    "clean": "rm -rf dist",
+    "dev": "webpack-dev-server --config webpack.dev.js"
   },
   "keywords": [
     "javascript",
@@ -23,5 +25,11 @@
   "bugs": {
     "url": "https://github.com/Astro36/particles/issues"
   },
-  "homepage": "https://github.com/Astro36/particles#readme"
+  "homepage": "https://github.com/Astro36/particles#readme",
+  "devDependencies": {
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.2.0",
+    "webpack-dev-server": "^3.1.14"
+  }
 }
