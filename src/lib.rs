@@ -20,10 +20,10 @@ fn random_arbitrary(min: f64, max: f64) -> f64 {
     random() * (max - min) + min
 }
 
-static CONNECTABLE_DISTANCE: f64 = 100.0;
+static CONNECTABLE_DISTANCE: f64 = 200.0;
 static CONNECTABLE_DISTANCE_SQUARED: f64 = CONNECTABLE_DISTANCE * CONNECTABLE_DISTANCE;
 static PARTICLE_SIZE_LIMIT: f64 = 3.0;
-static PARTICLE_SPEED_LIMIT: f64 = 5.0;
+static PARTICLE_SPEED_LIMIT: f64 = 3.0;
 
 #[derive(PartialEq)]
 enum ParticlePosition {
@@ -52,35 +52,35 @@ impl Particle {
             ParticlePosition::TopBoundary => Particle {
                 x: random_arbitrary(0.0, canvas_width),
                 y: 0.0,
-                size: random_arbitrary(0.0, PARTICLE_SIZE_LIMIT),
+                size: random_arbitrary(1.0, PARTICLE_SIZE_LIMIT),
                 speed_x: random_arbitrary(-PARTICLE_SPEED_LIMIT, PARTICLE_SPEED_LIMIT),
                 speed_y: random_arbitrary(0.0, PARTICLE_SPEED_LIMIT),
             },
             ParticlePosition::RightBoundary => Particle {
                 x: canvas_width,
                 y: random_arbitrary(0.0, canvas_height),
-                size: random_arbitrary(0.0, PARTICLE_SIZE_LIMIT),
+                size: random_arbitrary(1.0, PARTICLE_SIZE_LIMIT),
                 speed_x: random_arbitrary(-PARTICLE_SPEED_LIMIT, 0.0),
                 speed_y: random_arbitrary(-PARTICLE_SPEED_LIMIT, PARTICLE_SPEED_LIMIT),
             },
             ParticlePosition::BottomBoundary => Particle {
                 x: random_arbitrary(0.0, canvas_width),
                 y: canvas_height,
-                size: random_arbitrary(0.0, PARTICLE_SIZE_LIMIT),
+                size: random_arbitrary(1.0, PARTICLE_SIZE_LIMIT),
                 speed_x: random_arbitrary(-PARTICLE_SPEED_LIMIT, PARTICLE_SPEED_LIMIT),
                 speed_y: random_arbitrary(-PARTICLE_SPEED_LIMIT, 0.0),
             },
             ParticlePosition::LeftBoundary => Particle {
                 x: 0.0,
                 y: random_arbitrary(0.0, canvas_height),
-                size: random_arbitrary(0.0, PARTICLE_SIZE_LIMIT),
+                size: random_arbitrary(1.0, PARTICLE_SIZE_LIMIT),
                 speed_x: random_arbitrary(0.0, PARTICLE_SPEED_LIMIT),
                 speed_y: random_arbitrary(-PARTICLE_SPEED_LIMIT, PARTICLE_SPEED_LIMIT),
             },
             _ => Particle {
                 x: random_arbitrary(0.0, canvas_width),
                 y: random_arbitrary(0.0, canvas_height),
-                size: random_arbitrary(0.0, PARTICLE_SIZE_LIMIT),
+                size: random_arbitrary(1.0, PARTICLE_SIZE_LIMIT),
                 speed_x: random_arbitrary(-PARTICLE_SPEED_LIMIT, PARTICLE_SPEED_LIMIT),
                 speed_y: random_arbitrary(-PARTICLE_SPEED_LIMIT, PARTICLE_SPEED_LIMIT),
             },
@@ -90,6 +90,14 @@ impl Particle {
     fn calculate(&mut self) {
         self.x += self.speed_x;
         self.y += self.speed_y;
+    }
+
+    fn get_distance(&self, other_particle: &Particle) -> f64 {
+        (self.x - other_particle.x).hypot(self.y - other_particle.y)
+    }
+
+    fn get_distance_squared(&self, other_particle: &Particle) -> f64 {
+        (self.x - other_particle.x).powi(2) + (self.y - other_particle.y).powi(2)
     }
 
     fn get_position(&self, canvas_width: f64, canvas_height: f64) -> ParticlePosition {
@@ -108,49 +116,35 @@ impl Particle {
     }
 
     fn is_connectable(&self, other_particle: &Particle) -> bool {
-        let squared_distance =
-            (self.x - other_particle.x).powi(2) + (self.y - other_particle.y).powi(2);
-        squared_distance > 0.0 && squared_distance <= CONNECTABLE_DISTANCE_SQUARED
+        let distance_squared = self.get_distance_squared(other_particle);
+        distance_squared > 0.0 && distance_squared <= CONNECTABLE_DISTANCE_SQUARED
     }
 }
 
 #[wasm_bindgen]
 pub struct ParticleManager {
-    id: String,
     canvas: HtmlCanvasElement,
     canvas_width: f64,
     canvas_height: f64,
     particles: Vec<Particle>,
-    particle_amount_limit: u32,
 }
 
 #[wasm_bindgen]
 impl ParticleManager {
     #[wasm_bindgen(constructor)]
-    pub fn new(id: String, amount: u32) -> ParticleManager {
-        let canvas = web_sys::window()
-            .expect("no global `window` exists")
-            .document()
-            .expect("should have a document on window")
-            .get_element_by_id(&id)
-            .expect("document should have a target canvas")
-            .dyn_into::<web_sys::HtmlCanvasElement>()
-            .map_err(|_| ())
-            .unwrap();
+    pub fn new(canvas: HtmlCanvasElement, particle_amount: u32) -> ParticleManager {
         let canvas_width = canvas.width() as f64;
         let canvas_height = canvas.height() as f64;
-        let particles = (0..amount)
+        let particles = (0..particle_amount)
             .map(|_| {
                 Particle::create_random(ParticlePosition::InsideCanvas, canvas_width, canvas_height)
             })
             .collect();
         ParticleManager {
-            id: id,
             canvas: canvas,
             canvas_width: canvas_width,
             canvas_height: canvas_height,
             particles: particles,
-            particle_amount_limit: amount,
         }
     }
 
@@ -166,7 +160,7 @@ impl ParticleManager {
             .unwrap();
         let particles = &mut self.particles;
         let particle_amount = particles.len();
-        
+
         context.clear_rect(0.0, 0.0, canvas_width, canvas_height);
 
         for i in 0..particle_amount {
@@ -191,6 +185,9 @@ impl ParticleManager {
                 let other_particle = &particles[j];
                 if particle.is_connectable(&other_particle) {
                     context.begin_path();
+                    context.set_line_width(
+                        1.0 - (particle.get_distance(other_particle) / CONNECTABLE_DISTANCE),
+                    );
                     context.move_to(other_particle.x, other_particle.y);
                     context.line_to(particle.x, particle.y);
                     context.stroke();
