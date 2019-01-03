@@ -1,20 +1,18 @@
 {
   "name": "particles",
   "version": "0.1.0",
-  "description": "Particle Generator JavaScript Library with WebAssembly",
+  "description": "Particle Creating Library for Browser with WebAssembly",
   "main": "index.js",
-  "private": true,
   "scripts": {
-    "build": "node build.js",
-    "clean": "rm -rf dist",
-    "dev": "parcel demo/index.html -d dev",
-    "lint": "eslint . --ignore-path .gitignore --ignore-pattern dist/ --ignore-pattern lib/crate/",
-    "lint:fix": "eslint . --ignore-path .gitignore --ignore-pattern dist/ --ignore-pattern lib/crate/ --fix"
+    "build": "wasm-pack build",
+    "clean": "rm -rf dist"
   },
   "keywords": [
     "javascript",
     "webassembly",
-    "particles"
+    "particles",
+    "particle",
+    "manager"
   ],
   "repository": {
     "type": "git",
@@ -25,17 +23,5 @@
   "bugs": {
     "url": "https://github.com/Astro36/particles/issues"
   },
-  "homepage": "https://github.com/Astro36/particles#readme",
-  "devDependencies": {
-    "@babel/preset-env": "^7.2.3",
-    "eslint": "^5.11.1",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-compat": "^2.6.3",
-    "eslint-plugin-import": "^2.14.0",
-    "parcel-bundler": "^1.11.0",
-    "parcel-plugin-wasm.rs": "^1.2.8"
-  },
-  "dependencies": {
-    "path": "^0.12.7"
-  }
+  "homepage": "https://github.com/Astro36/particles#readme"
 }

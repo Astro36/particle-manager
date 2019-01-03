@@ -1,13 +1,13 @@
 [package]
 name = "particles"
-description = "Particle Generator JavaScript Library with WebAssembly"
+description = "Particle Creating Library for Browser with WebAssembly"
 version = "0.1.0"
 authors = ["Seungjae Park <astr36@naver.com>"]
 edition = "2018"
 publish = false
-repository = "https://github.com/Astro36/particles"
+repository = "https://github.com/Astro36/particle-manager"
 readme = "README.md"
-keywords = ["javascript", "webassembly", "particles"]
+keywords = ["javascript", "webassembly", "particles", "particle", "manager"]
 license = "MIT"
 
 [lib]
@@ -18,12 +18,11 @@ js-sys = "0.3"
 wasm-bindgen = "0.2"
 
 [dependencies.web-sys]
-version = "0.3.4"
+version = "0.3"
 features = [
   'CanvasRenderingContext2d',
   'Document',
   'Element',
   'HtmlCanvasElement',
-  'Node',
   'Window',
 ]

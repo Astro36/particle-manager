@@ -1,8 +1,48 @@
 # Particle Manager
 
-> A JavaScript Library for Creating Particles using WebAssembly
+> Particle Creating Library for Browser with WebAssembly
 
 **Particle Manager is inspired from [particles.js](https://vincentgarreau.com/particles.js/) developed by [Vincent Garreau](https://github.com/VincentGarreau/particles.js/)**
+
+## ChangeLog
+
+See [CHANGELOG](./CHANGELOG.md)
+
+## Installation
+
+- Install with npm:
+
+```bash
+npm install particle-manager --save
+```
+
+- Clone the repo:
+
+```bash
+git clone https://github.com/Astro36/particle-manager.git
+```
+
+## Build Requirement
+
+To build this program, you need to install Rust.
+
+Then you run below command to compile the program.
+
+```bash
+npm run build
+```
+
+## Usage
+
+### Example
+
+Add particles:
+
+```javascript
+import('./particle-manager')
+  .then()
+  .catch(console.error);
+```
 
 ## License
 
