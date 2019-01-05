@@ -8,9 +8,9 @@
 
 ## ChangeLog
 
-![Demo Screenshot](./demo/screenshot.png)
+![Demo Screenshot](https://github.com/Astro36/particle-manager/blob/master/demo/screenshot.png)
 
-See [CHANGELOG](./CHANGELOG.md)
+See [CHANGELOG](https://github.com/Astro36/particle-manager/blob/master/CHANGELOG.md)
 
 ## Demo
 
@@ -91,4 +91,4 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-Particle Manager is licensed under the [MIT License](./LICENSE).
+Particle Manager is licensed under the [MIT License](https://github.com/Astro36/particle-manager/blob/master/LICENSE).
