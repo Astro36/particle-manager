@@ -1,0 +1,21 @@
+{
+  "name": "particle-manager",
+  "collaborators": [
+    "Seungjae Park <astr36@naver.com>"
+  ],
+  "description": "Particle Library for Browser with WebAssembly",
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Astro36/particle-manager"
+  },
+  "files": [
+    "particle_manager_bg.wasm",
+    "particle_manager.js",
+    "particle_manager.d.ts"
+  ],
+  "module": "particle_manager.js",
+  "types": "particle_manager.d.ts",
+  "sideEffects": "false"
+}

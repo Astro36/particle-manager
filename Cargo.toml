@@ -1,6 +1,6 @@
 [package]
-name = "particles"
-description = "Particle Creating Library for Browser with WebAssembly"
+name = "particle-manager"
+description = "Particle Library for Browser with WebAssembly"
 version = "0.1.0"
 authors = ["Seungjae Park <astr36@naver.com>"]
 edition = "2018"
