@@ -8,7 +8,13 @@
 
 ## ChangeLog
 
+![Demo Screenshot](./demo/screenshot.png)
+
 See [CHANGELOG](./CHANGELOG.md)
+
+## Demo
+
+See [Demo](https://astro36.github.io/particle-manager/demo/)
 
 ## Installation
 

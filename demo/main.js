@@ -1,4 +1,4 @@
-import('../pkg/particles')
+import('../pkg/particle_manager')
   .then(({ ParticleManager }) => {
     const canvas = document.getElementById('particles');
     canvas.width = window.innerWidth;
