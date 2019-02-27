@@ -2,7 +2,7 @@
 name = "particle-manager"
 description = "Particle Library for Browser with WebAssembly"
 version = "0.1.0"
-authors = ["Seungjae Park <astr36@naver.com>"]
+authors = ["Seungjae Park <astro.psj@gmail.com>"]
 edition = "2018"
 publish = false
 repository = "https://github.com/Astro36/particle-manager"
